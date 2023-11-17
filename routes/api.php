@@ -1,6 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\MemberController;
+use App\Http\Controllers\StaffController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +16,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix("v1")->group(function () {
+    Route::controller(BookController::class)->group(function () {
+        Route::get("/books", "index");
+        Route::get("/books/{book}", "show");
+        Route::post("/books", "store");
+        Route::put("/books/{book}", "update");
+        Route::delete("/books/{book}", "destroy");
+    });
+
+    Route::controller(MemberController::class)->group(function () {
+        Route::get("/members", "index");
+        Route::get("/members/{member}", "show");
+        Route::post("/members", "store");
+        Route::put("/members/{member}", "update");
+        Route::delete("/members/{member}", "destroy");
+    });
+
+    Route::controller(StaffController::class)->group(function () {
+        Route::get("/staffs", "index");
+        Route::get("/staffs/{staff}", "show");
+        Route::post("/staffs", "store");
+        Route::put("/staffs/{staff}", "update");
+        Route::delete("/staffs/{staff}", "destroy");
+    });
 });
